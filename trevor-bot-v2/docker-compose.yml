@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: trevor-postgres
+    environment:
+      POSTGRES_DB: trevor_bot
+      POSTGRES_USER: trevor
+      POSTGRES_PASSWORD: trevor_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trevor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # HAPI FHIR Server
+  fhir:
+    image: hapiproject/hapi:latest
+    container_name: trevor-fhir
+    environment:
+      spring.datasource.url: jdbc:postgresql://postgres:5432/trevor_bot
+      spring.datasource.username: trevor
+      spring.datasource.password: trevor_dev_password
+      spring.datasource.driverClassName: org.postgresql.Driver
+      spring.jpa.properties.hibernate.dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgres94Dialect
+      hapi.fhir.fhir_version: R4
+      hapi.fhir.subscription.resthook_enabled: true
+      hapi.fhir.allow_external_references: true
+      hapi.fhir.allow_multiple_delete: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/fhir/metadata"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ChromaDB (Vector Database) - Optional standalone
+  # chromadb:
+  #   image: chromadb/chroma:latest
+  #   container_name: trevor-chroma
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - chroma_data:/chroma/chroma
+
+volumes:
+  postgres_data:
+  # chroma_data:
