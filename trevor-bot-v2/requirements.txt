@@ -32,7 +32,7 @@ apscheduler==3.10.4
 
 # Utilities
 loguru==0.7.2
-httpx==0.26.0
+httpx~=0.25.2  # Compatible with python-telegram-bot
 python-multipart==0.0.6
 aiofiles==23.2.1
 
@@ -41,6 +41,6 @@ pandas==2.2.0
 numpy==1.26.3
 
 # Testing
-pytest==8.0.0
+pytest~=7.4.0  # Compatible with pytest-asyncio
 pytest-asyncio==0.23.4
 pytest-cov==4.1.0
