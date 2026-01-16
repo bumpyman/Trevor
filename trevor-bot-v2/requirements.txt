@@ -1,0 +1,46 @@
+# Core Bot Frameworks
+python-telegram-bot==20.7
+twilio==8.11.1
+fastapi==0.109.0
+uvicorn==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# LLM & AI
+anthropic==0.18.1
+langchain==0.1.6
+langchain-community==0.0.19
+chromadb==0.4.22
+sentence-transformers==2.3.1
+openai==1.12.0  # Optional: for embeddings
+
+# Healthcare/FHIR
+fhirclient==4.1.0
+fhir.resources==7.1.0
+
+# Database
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Email & Communications
+sendgrid==6.11.0
+python-dotenv==1.0.1
+
+# Background Jobs
+apscheduler==3.10.4
+
+# Utilities
+loguru==0.7.2
+httpx~=0.25.2  # Compatible with python-telegram-bot
+python-multipart==0.0.6
+aiofiles==23.2.1
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.3
+
+# Testing
+pytest~=7.4.0  # Compatible with pytest-asyncio
+pytest-asyncio==0.23.4
+pytest-cov==4.1.0
